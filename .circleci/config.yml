@@ -6,5 +6,5 @@ jobs:
     steps:
       - checkout
       - run: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-      - run: docker build -t $DOCKERHUB_USERNAME/vrms-server:latest .
-      - run: docker push $DOCKERHUB_USERNAME/vrms-server:latest
+      - run: docker build -t $DOCKERHUB_USERNAME/vrms-server:$CIRCLE_BRANCH .
+      - run: docker push $DOCKERHUB_USERNAME/vrms-server:$CIRCLE_BRANCH
