@@ -3,16 +3,12 @@ version: 2
 jobs:
   build:
     docker:
-      - image: gradle:jdk11-alpine
+      - image: docker:dind
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    working_directory: /home/app
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run: gradle bootJar
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
+      - run: docker build -t $DOCKERHUB_USERNAME/vrms-server:latest .
+      - run: docker push $DOCKERHUB_USERNAME/vrms-server:latest
