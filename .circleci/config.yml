@@ -2,13 +2,9 @@ version: 2
 
 jobs:
   build:
-    docker:
-      - image: docker:dind
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
-    working_directory: /home/app
+    machine: true
     steps:
       - checkout
+      - run: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
       - run: docker build -t $DOCKERHUB_USERNAME/vrms-server:latest .
       - run: docker push $DOCKERHUB_USERNAME/vrms-server:latest
