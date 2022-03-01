@@ -46,6 +46,10 @@ public class PatientProfile {
     @JoinColumn(name = "ward_id")
     private MstWard ward;
 
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private Account createdBy;
+
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 }
