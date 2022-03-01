@@ -3,7 +3,10 @@ package io.github.censodev.vrms.vrmsserver.utils.mappers;
 import io.github.censodev.vrms.vrmsserver.data.models.*;
 import io.github.censodev.vrms.vrmsserver.http.models.profile.PatientProfileCreateReq;
 import io.github.censodev.vrms.vrmsserver.http.models.profile.PatientProfileRes;
+import io.github.censodev.vrms.vrmsserver.http.models.profile.VcnProfileCreateReq;
+import io.github.censodev.vrms.vrmsserver.http.models.profile.VcnProfileRes;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
+import io.github.censodev.vrms.vrmsserver.utils.enums.VcnProfileStatusEnum;
 
 public class ProfileMapper {
     public static PatientProfile map(PatientProfileCreateReq model) {
@@ -34,6 +37,27 @@ public class ProfileMapper {
                 .provinceId(model.getProvince().getId())
                 .districtId(model.getDistrict().getId())
                 .wardId(model.getWard().getId())
+                .build();
+    }
+
+    public static VcnProfileRes map(VcnProfile model) {
+        return VcnProfileRes.builder()
+                .id(model.getId())
+                .expectedInjectionTime(model.getExpectedInjectionTime())
+                .patientProfileId(model.getPatientProfile().getId())
+                .selectedPackageId(model.getSelectedPackage().getId())
+                .status(model.getStatus())
+                .selectedSiteId(model.getSelectedSite().getId())
+                .build();
+    }
+
+    public static VcnProfile map(VcnProfileCreateReq req) {
+        return VcnProfile.builder()
+                .patientProfile(PatientProfile.builder().id(req.getPatientProfileId()).build())
+                .expectedInjectionTime(req.getExpectedInjectionTime())
+                .selectedPackage(VcnPackage.builder().id(req.getSelectedPackageId()).build())
+                .selectedSite(VcnSite.builder().id(req.getSelectedSiteId()).build())
+                .status(VcnProfileStatusEnum.CREATED)
                 .build();
     }
 }

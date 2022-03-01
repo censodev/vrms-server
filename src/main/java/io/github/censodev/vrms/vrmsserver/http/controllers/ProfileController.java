@@ -3,7 +3,6 @@ package io.github.censodev.vrms.vrmsserver.http.controllers;
 import io.github.censodev.vrms.vrmsserver.http.models.PageReq;
 import io.github.censodev.vrms.vrmsserver.http.models.Res;
 import io.github.censodev.vrms.vrmsserver.http.models.profile.*;
-import io.github.censodev.vrms.vrmsserver.http.models.vcn.process.*;
 import io.github.censodev.vrms.vrmsserver.services.ProfileService;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
 import org.springframework.data.domain.Page;
@@ -41,7 +40,7 @@ public class ProfileController {
     }
 
     @PostMapping("vcn")
-    public Res<Void> createVcnProfile(@RequestBody VcnProcessCreateReq req) {
+    public Res<Void> createVcnProfile(@RequestBody VcnProfileCreateReq req) {
         profileService.createVcnProfile(req);
         return new Res<>(null, I18nUtil.get("profile.vcn.create-success"));
     }
