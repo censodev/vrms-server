@@ -8,6 +8,7 @@ import io.github.censodev.vrms.vrmsserver.http.models.PageReq;
 import io.github.censodev.vrms.vrmsserver.http.models.profile.*;
 import io.github.censodev.vrms.vrmsserver.http.models.profile.VcnProfileCreateReq;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
+import io.github.censodev.vrms.vrmsserver.utils.SessionUtil;
 import io.github.censodev.vrms.vrmsserver.utils.mappers.ProfileMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -33,12 +34,16 @@ public class ProfileService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, I18nUtil.get("profile.patient.id-card-exist"));
         }
         var model = ProfileMapper.map(req);
+        model.setCreatedBy(SessionUtil.getAuth().orElseThrow());
         patientProfileRepository.save(model);
     }
 
     public void updatePatientProfile(PatientProfileUpdateReq req) {
         var model = patientProfileRepository.findById(req.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, I18nUtil.get("profile.patient.not-found")));
+        if (!model.getCreatedBy().getId().equals(SessionUtil.getAuth().map(Account::getId).orElseThrow())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         if (patientProfileRepository.findByIdCard(req.getIdCard()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, I18nUtil.get("profile.patient.id-card-exist"));
         }
