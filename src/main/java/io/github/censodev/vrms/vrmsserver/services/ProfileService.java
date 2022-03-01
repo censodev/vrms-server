@@ -44,7 +44,9 @@ public class ProfileService {
         if (!model.getCreatedBy().getId().equals(SessionUtil.getAuth().map(Account::getId).orElseThrow())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        if (patientProfileRepository.findByIdCard(req.getIdCard()).isPresent()) {
+
+        var dupIdCardOne = patientProfileRepository.findByIdCard(req.getIdCard());
+        if (dupIdCardOne.isPresent() && !dupIdCardOne.get().getId().equals(model.getId())) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, I18nUtil.get("profile.patient.id-card-exist"));
         }
         model.setIdCard(req.getIdCard());
