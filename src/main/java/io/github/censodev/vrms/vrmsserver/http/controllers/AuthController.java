@@ -27,11 +27,11 @@ public class AuthController {
 
     @PostMapping("admin/login")
     public ResponseEntity<Res<LoginRes>> adminLogin(@RequestBody LoginUsnPwdReq req) {
-        return ResponseEntity.ok(new Res<>(authService.login(req), I18nUtil.get("auth.login.success")));
+        return ResponseEntity.ok(new Res<>(authService.login(req, true), I18nUtil.get("auth.login.success")));
     }
 
     @PostMapping("login")
-    public ResponseEntity<Res<LoginRes>> login(@RequestBody LoginViaPhoneReq req) {
-        return ResponseEntity.ok(new Res<>(authService.login(req), I18nUtil.get("auth.login.success")));
+    public ResponseEntity<Res<LoginRes>> login(@RequestBody LoginUsnPwdReq req) {
+        return ResponseEntity.ok(new Res<>(authService.login(req, false), I18nUtil.get("auth.login.success")));
     }
 }

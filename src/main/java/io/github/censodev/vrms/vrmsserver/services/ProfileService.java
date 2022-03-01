@@ -5,9 +5,13 @@ import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileHistoryRep
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileRepository;
 import io.github.censodev.vrms.vrmsserver.http.models.PageReq;
 import io.github.censodev.vrms.vrmsserver.http.models.profile.*;
-import io.github.censodev.vrms.vrmsserver.http.models.vcn.process.*;
+import io.github.censodev.vrms.vrmsserver.http.models.vcn.process.VcnProcessCreateReq;
+import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
+import io.github.censodev.vrms.vrmsserver.utils.mappers.ProfileMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ProfileService {
@@ -23,15 +27,25 @@ public class ProfileService {
         this.vcnProfileHistoryRepository = vcnProfileHistoryRepository;
     }
 
-    public void createPatientProfile(PatientProfileCreateReq req) {}
-
-    public void updatePatientProfile(PatientProfileUpdateReq req) {}
-
-    public Page<PatientProfileRes> searchPatientProfile(PatientProfileSearchReq req, PageReq pageReq) {
-        return null;
+    public void createPatientProfile(PatientProfileCreateReq req) {
+        if (patientProfileRepository.findByIdCard(req.getIdCard()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, I18nUtil.get("profile.patient.id-card-exist"));
+        }
+        var model = ProfileMapper.map(req);
+        patientProfileRepository.save(model);
     }
 
-    public void createVcnProfile(VcnProcessCreateReq req) {}
+    public void updatePatientProfile(PatientProfileUpdateReq req) {
+    }
+
+    public Page<PatientProfileRes> searchPatientProfile(PatientProfileSearchReq searchReq, PageReq pageReq) {
+        return patientProfileRepository
+                .search("%" + searchReq.getKeyword() + "%", pageReq.toPageable())
+                .map(ProfileMapper::map);
+    }
+
+    public void createVcnProfile(VcnProcessCreateReq req) {
+    }
 
     public Page<VcnProfileRes> searchVcnProfiles(VcnProfileSearchReq searchReq, PageReq pageReq) {
         return null;
