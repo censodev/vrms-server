@@ -6,14 +6,16 @@ import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileHistoryRep
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileRepository;
 import io.github.censodev.vrms.vrmsserver.http.models.PageReq;
 import io.github.censodev.vrms.vrmsserver.http.models.profile.*;
-import io.github.censodev.vrms.vrmsserver.http.models.profile.VcnProfileCreateReq;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
 import io.github.censodev.vrms.vrmsserver.utils.SessionUtil;
+import io.github.censodev.vrms.vrmsserver.utils.enums.VcnProfileStatusEnum;
 import io.github.censodev.vrms.vrmsserver.utils.mappers.ProfileMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.Instant;
 
 @Service
 public class ProfileService {
@@ -69,7 +71,13 @@ public class ProfileService {
 
     public void createVcnProfile(VcnProfileCreateReq req) {
         var model = ProfileMapper.map(req);
-        vcnProfileRepository.save(model);
+        model = vcnProfileRepository.save(model);
+        vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
+                .createdBy(SessionUtil.getAuth().orElseThrow())
+                .vcnProfile(model)
+                .time(Instant.now())
+                .status(VcnProfileStatusEnum.CREATED)
+                .build());
     }
 
     public Page<VcnProfileRes> searchVcnProfiles(VcnProfileSearchReq searchReq, PageReq pageReq) {
