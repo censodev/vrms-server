@@ -12,7 +12,7 @@ jobs:
     machine: true
     steps:
       - run: ssh $SSH_USER@$SSH_HOST "docker rm -f vrms-server"
-      - run: ssh $SSH_USER@$SSH_HOST "docker image rm $DOCKERHUB_USERNAME/vrms-server:$CIRCLE_BRANCH"
+      - run: ssh $SSH_USER@$SSH_HOST "docker pull $DOCKERHUB_USERNAME/vrms-server:$CIRCLE_BRANCH"
       - run: ssh $SSH_USER@$SSH_HOST "docker run --name vrms-server -d -p 8080:8080 $DOCKERHUB_USERNAME/vrms-server:$CIRCLE_BRANCH"
 
 workflows:
