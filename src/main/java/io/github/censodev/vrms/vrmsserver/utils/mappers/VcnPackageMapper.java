@@ -14,6 +14,7 @@ public class VcnPackageMapper {
                 .price(req.getPrice())
                 .screeningTemplate(VcnScreeningTmpl.builder().id(req.getScreeningTemplateId()).build())
                 .desc(req.getDesc())
+                .diseasesCode(req.getDiseasesCode())
                 .build();
     }
 

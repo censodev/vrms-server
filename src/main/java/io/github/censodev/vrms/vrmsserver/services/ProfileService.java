@@ -1,13 +1,21 @@
 package io.github.censodev.vrms.vrmsserver.services;
 
+import io.github.censodev.vrms.vrmsserver.data.models.*;
 import io.github.censodev.vrms.vrmsserver.data.repositories.PatientProfileRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileHistoryRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileRepository;
 import io.github.censodev.vrms.vrmsserver.http.models.PageReq;
 import io.github.censodev.vrms.vrmsserver.http.models.profile.*;
-import io.github.censodev.vrms.vrmsserver.http.models.vcn.process.*;
+import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
+import io.github.censodev.vrms.vrmsserver.utils.SessionUtil;
+import io.github.censodev.vrms.vrmsserver.utils.enums.VcnProfileStatusEnum;
+import io.github.censodev.vrms.vrmsserver.utils.mappers.ProfileMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.Instant;
 
 @Service
 public class ProfileService {
@@ -23,17 +31,58 @@ public class ProfileService {
         this.vcnProfileHistoryRepository = vcnProfileHistoryRepository;
     }
 
-    public void createPatientProfile(PatientProfileCreateReq req) {}
-
-    public void updatePatientProfile(PatientProfileUpdateReq req) {}
-
-    public Page<PatientProfileRes> searchPatientProfile(PatientProfileSearchReq req, PageReq pageReq) {
-        return null;
+    public void createPatientProfile(PatientProfileCreateReq req) {
+        if (patientProfileRepository.findByIdCard(req.getIdCard()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, I18nUtil.get("profile.patient.id-card-exist"));
+        }
+        var model = ProfileMapper.map(req);
+        model.setCreatedBy(SessionUtil.getAuth().orElseThrow());
+        patientProfileRepository.save(model);
     }
 
-    public void createVcnProfile(VcnProcessCreateReq req) {}
+    public void updatePatientProfile(PatientProfileUpdateReq req) {
+        var model = patientProfileRepository.findById(req.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, I18nUtil.get("profile.patient.not-found")));
+        if (!model.getCreatedBy().getId().equals(SessionUtil.getAuth().map(Account::getId).orElseThrow())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
+        var dupIdCardOne = patientProfileRepository.findByIdCard(req.getIdCard());
+        if (dupIdCardOne.isPresent() && !dupIdCardOne.get().getId().equals(model.getId())) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, I18nUtil.get("profile.patient.id-card-exist"));
+        }
+        model.setIdCard(req.getIdCard());
+        model.setFullName(req.getFullName());
+        model.setBirthday(req.getBirthday());
+        model.setGender(req.getGender());
+        model.setCountry(MstCountry.builder().id(req.getCountryId()).build());
+        model.setNation(MstNation.builder().id(req.getNationId()).build());
+        model.setProvince(MstProvince.builder().id(req.getProvinceId()).build());
+        model.setDistrict(MstDistrict.builder().id(req.getDistrictId()).build());
+        model.setWard(MstWard.builder().id(req.getWardId()).build());
+        patientProfileRepository.save(model);
+    }
+
+    public Page<PatientProfileRes> searchPatientProfile(PatientProfileSearchReq searchReq, PageReq pageReq) {
+        return patientProfileRepository
+                .search("%" + searchReq.getKeyword() + "%", pageReq.toPageable())
+                .map(ProfileMapper::map);
+    }
+
+    public void createVcnProfile(VcnProfileCreateReq req) {
+        var model = ProfileMapper.map(req);
+        model = vcnProfileRepository.save(model);
+        vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
+                .createdBy(SessionUtil.getAuth().orElseThrow())
+                .vcnProfile(model)
+                .time(Instant.now())
+                .status(VcnProfileStatusEnum.CREATED)
+                .build());
+    }
 
     public Page<VcnProfileRes> searchVcnProfiles(VcnProfileSearchReq searchReq, PageReq pageReq) {
-        return null;
+        return vcnProfileRepository
+                .findByPatientProfileId(searchReq.getPatientProfileId(), pageReq.toPageable())
+                .map(ProfileMapper::map);
     }
 }

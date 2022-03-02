@@ -40,6 +40,6 @@ public class AccountController {
     @Secured({RoleEnum.Const.ROLE_ADMIN})
     public ResponseEntity<Res<Void>> update(@RequestBody AccountUpdateReq req) {
         accountService.update(req);
-        return ResponseEntity.ok(new Res<>(null, I18nUtil.get("account.create.success")));
+        return ResponseEntity.ok(new Res<>(null, I18nUtil.get("account.update.success")));
     }
 }
