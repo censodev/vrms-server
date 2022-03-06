@@ -69,6 +69,12 @@ public class ProfileService {
                 .map(ProfileMapper::map);
     }
 
+    public Page<PatientProfileRes> getMyPatientProfile(PageReq pageReq) {
+        return patientProfileRepository
+                .findByCreatedById(SessionUtil.getAuth().map(Account::getId).orElseThrow(), pageReq.toPageable())
+                .map(ProfileMapper::map);
+    }
+
     public void createVcnProfile(VcnProfileCreateReq req) {
         var model = ProfileMapper.map(req);
         model = vcnProfileRepository.save(model);

@@ -1,7 +1,6 @@
 package io.github.censodev.vrms.vrmsserver.data.repositories;
 
 import io.github.censodev.vrms.vrmsserver.data.models.PatientProfile;
-import io.github.censodev.vrms.vrmsserver.data.models.VcnPackage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +14,6 @@ public interface PatientProfileRepository extends JpaRepository<PatientProfile, 
     Page<PatientProfile> search(@Param("kw") String keyword, Pageable pageable);
 
     Optional<PatientProfile> findByIdCard(String idCard);
+
+    Page<PatientProfile> findByCreatedById(Long createdById, Pageable pageable);
 }
