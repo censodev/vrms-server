@@ -22,6 +22,11 @@ public class ProfileController {
         return new Res<>(profileService.searchPatientProfile(searchReq, pageReq), "");
     }
 
+    @GetMapping("patient/me")
+    public Res<Page<PatientProfileRes>> getMyPatientProfiles(PageReq pageReq) {
+        return new Res<>(profileService.getMyPatientProfile(pageReq), "");
+    }
+
     @PostMapping("patient")
     public Res<Void> createPatientProfile(@RequestBody PatientProfileCreateReq req) {
         profileService.createPatientProfile(req);
