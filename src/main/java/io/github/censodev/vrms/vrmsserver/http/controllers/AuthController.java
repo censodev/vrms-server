@@ -4,6 +4,7 @@ import io.github.censodev.vrms.vrmsserver.http.models.Res;
 import io.github.censodev.vrms.vrmsserver.http.models.auth.LoginRes;
 import io.github.censodev.vrms.vrmsserver.http.models.auth.LoginUsnPwdReq;
 import io.github.censodev.vrms.vrmsserver.http.models.auth.LoginViaPhoneReq;
+import io.github.censodev.vrms.vrmsserver.http.models.auth.OTPCreateReq;
 import io.github.censodev.vrms.vrmsserver.services.AuthService;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +32,8 @@ public class AuthController {
     }
 
     @PostMapping("otp")
-    public Res<Void> sendOTP(String phone) {
-        authService.createOTPLoginSession(phone);
+    public Res<Void> sendOTP(@RequestBody OTPCreateReq req) {
+        authService.createOTPLoginSessionForGuest(req);
         return new Res<>(null, "");
     }
 }

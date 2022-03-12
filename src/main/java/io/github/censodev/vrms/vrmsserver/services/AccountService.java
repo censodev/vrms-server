@@ -23,14 +23,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final MailService mailService;
+    private final AmazonWebService aws;
 
     public AccountService(AccountRepository accountRepository,
                           PasswordEncoder passwordEncoder,
-                          MailService mailService) {
+                          AmazonWebService aws) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
-        this.mailService = mailService;
+        this.aws = aws;
     }
 
     public void create(AccountCreateReq req) {
@@ -45,8 +45,8 @@ public class AccountService {
                 .status(StatusEnum.ACTIVE)
                 .build();
         accountRepository.save(model);
-        mailService.sendText(req.getEmail(), "Thông tin đăng nhập", String.format("Tên đăng nhập: %s%nMật khẩu: %s", req.getUsername(), pwd));
-        log.info(String.format("username/password: %s/%s", model.getUsername(), pwd));
+        aws.sendMail(req.getEmail(), "Thông tin đăng nhập", String.format("Tên đăng nhập: <b>%s</b>%<br/>Mật khẩu: <b>%s</b>", req.getUsername(), pwd));
+        log.info(String.format("username / password: %s / %s", model.getUsername(), pwd));
     }
 
     public void update(AccountUpdateReq req) {

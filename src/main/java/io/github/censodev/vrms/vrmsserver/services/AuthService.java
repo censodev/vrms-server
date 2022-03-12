@@ -7,6 +7,7 @@ import io.github.censodev.vrms.vrmsserver.data.repositories.AccountRepository;
 import io.github.censodev.vrms.vrmsserver.http.models.auth.LoginRes;
 import io.github.censodev.vrms.vrmsserver.http.models.auth.LoginUsnPwdReq;
 import io.github.censodev.vrms.vrmsserver.http.models.auth.LoginViaPhoneReq;
+import io.github.censodev.vrms.vrmsserver.http.models.auth.OTPCreateReq;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
 import io.github.censodev.vrms.vrmsserver.utils.enums.RoleEnum;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
@@ -15,9 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import software.amazon.awssdk.services.sns.SnsClient;
-import software.amazon.awssdk.services.sns.model.PublishRequest;
-import software.amazon.awssdk.services.sns.model.SnsException;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -29,13 +27,13 @@ public class AuthService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final SnsClient snsClient;
+    private final AmazonWebService aws;
 
-    public AuthService(AccountRepository accountRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, SnsClient snsClient) {
+    public AuthService(AccountRepository accountRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, AmazonWebService aws) {
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
-        this.snsClient = snsClient;
+        this.aws = aws;
     }
 
     public LoginRes login(LoginUsnPwdReq req, boolean forAdmin) {
@@ -56,18 +54,21 @@ public class AuthService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, I18nUtil.get("auth.login.fail")));
     }
 
-    public void createOTPLoginSession(String phone) {
-        var user = accountRepository.findByPhone(phone)
-                .orElse(new Account());
-        if (user.getStatus().equals(StatusEnum.IN_ACTIVE)) {
+    public void createOTPLoginSessionForGuest(OTPCreateReq req) {
+        var user = accountRepository.findByPhone(req.getPhone())
+                .orElse(Account.builder()
+                        .phone(req.getPhone())
+                        .status(StatusEnum.ACTIVE)
+                        .role(RoleEnum.ROLE_GUEST)
+                        .build());
+        if (StatusEnum.IN_ACTIVE.equals(user.getStatus())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, I18nUtil.get("auth.login.inactive"));
         }
         try {
             var otp = new DecimalFormat("000000").format(SecureRandom.getInstanceStrong().nextInt(999999));
-            user.setPhone(phone);
             user.setOtp(otp);
             accountRepository.save(user);
-            sendSMS(phone, otp);
+            aws.sendSMS(req.getPhone(), otp);
         } catch (NoSuchAlgorithmException e) {
             log.error(e.getMessage());
         }
@@ -89,18 +90,5 @@ public class AuthService {
                     }
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, I18nUtil.get("auth.login.fail-otp")));
-    }
-
-    private void sendSMS(String phone, String message) {
-        try {
-            var request = PublishRequest.builder()
-                    .message(message)
-                    .phoneNumber(phone)
-                    .build();
-            var result = snsClient.publish(request);
-            log.info(result.messageId() + " Message sent. Status was " + result.sdkHttpResponse().statusCode());
-        } catch (SnsException e) {
-            log.error(e.awsErrorDetails().errorMessage());
-        }
     }
 }
