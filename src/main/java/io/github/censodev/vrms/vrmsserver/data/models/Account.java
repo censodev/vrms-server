@@ -24,6 +24,8 @@ public class Account implements Credentials {
     private String username;
     private String password;
     private String email;
+    private String phone;
+    private String otp;
 
     @Enumerated(EnumType.STRING)
     private RoleEnum role;

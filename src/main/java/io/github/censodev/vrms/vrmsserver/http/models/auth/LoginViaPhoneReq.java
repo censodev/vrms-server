@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginViaPhoneReq {
     private String phone;
+    private String otp;
 }
