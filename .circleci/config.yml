@@ -13,7 +13,7 @@ jobs:
     steps:
       - run: ssh $SSH_USER@$SSH_HOST "docker rm -f vrms-server"
       - run: ssh $SSH_USER@$SSH_HOST "docker pull $DOCKERHUB_USERNAME/vrms-server:$CIRCLE_BRANCH"
-      - run: ssh $SSH_USER@$SSH_HOST "docker run --name vrms-server -d -p 8080:8080 -v ~/.aws:~/.aws $DOCKERHUB_USERNAME/vrms-server:$CIRCLE_BRANCH"
+      - run: ssh $SSH_USER@$SSH_HOST "docker run --name vrms-server -d -p 8080:8080 -v ~/.aws:/root/.aws:ro $DOCKERHUB_USERNAME/vrms-server:$CIRCLE_BRANCH"
 
 workflows:
   version: 2
