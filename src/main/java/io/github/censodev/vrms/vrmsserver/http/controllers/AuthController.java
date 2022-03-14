@@ -27,12 +27,12 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public Res<LoginRes> login(@RequestBody LoginViaPhoneReq req) {
+    public Res<LoginRes> guestLogin(@RequestBody LoginViaPhoneReq req) {
         return new Res<>(authService.login(req, false), I18nUtil.get("auth.login.success"));
     }
 
     @PostMapping("otp")
-    public Res<Void> sendOTP(@RequestBody OTPCreateReq req) {
+    public Res<Void> getOTP(@RequestBody OTPCreateReq req) {
         authService.createOTPLoginSessionForGuest(req);
         return new Res<>(null, "");
     }
