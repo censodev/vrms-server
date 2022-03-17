@@ -22,5 +22,6 @@ public class PatientProfileRes {
     private Integer provinceId;
     private Integer districtId;
     private Integer wardId;
+    private String address;
     private StatusEnum status;
 }
