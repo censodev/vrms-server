@@ -21,6 +21,7 @@ public class ProfileMapper {
                 .province(MstProvince.builder().id(model.getProvinceId()).build())
                 .district(MstDistrict.builder().id(model.getDistrictId()).build())
                 .ward(MstWard.builder().id(model.getWardId()).build())
+                .address(model.getAddress())
                 .build();
     }
 
@@ -37,6 +38,7 @@ public class ProfileMapper {
                 .provinceId(model.getProvince().getId())
                 .districtId(model.getDistrict().getId())
                 .wardId(model.getWard().getId())
+                .address(model.getAddress())
                 .build();
     }
 

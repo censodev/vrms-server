@@ -18,4 +18,5 @@ public class PatientProfileCreateReq {
     private Integer provinceId;
     private Integer districtId;
     private Integer wardId;
+    private String address;
 }

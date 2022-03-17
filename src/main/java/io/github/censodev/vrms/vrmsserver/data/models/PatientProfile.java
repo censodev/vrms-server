@@ -46,6 +46,8 @@ public class PatientProfile {
     @JoinColumn(name = "ward_id")
     private MstWard ward;
 
+    private String address;
+
     @ManyToOne
     @JoinColumn(name = "created_by")
     private Account createdBy;
