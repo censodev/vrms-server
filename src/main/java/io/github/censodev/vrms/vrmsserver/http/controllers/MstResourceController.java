@@ -2,10 +2,7 @@ package io.github.censodev.vrms.vrmsserver.http.controllers;
 
 import io.github.censodev.vrms.vrmsserver.data.models.*;
 import io.github.censodev.vrms.vrmsserver.services.MstResourceService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,9 +20,19 @@ public class MstResourceController {
         return service.countries();
     }
 
+    @GetMapping("country/{id}")
+    public MstCountry country(@PathVariable Integer id) {
+        return service.country(id);
+    }
+
     @GetMapping("nation")
     public List<MstNation> nations () {
         return service.nations();
+    }
+
+    @GetMapping("nation/{id}")
+    public MstNation nation(@PathVariable Integer id) {
+        return service.nation(id);
     }
 
     @GetMapping("province")
@@ -33,13 +40,28 @@ public class MstResourceController {
         return service.provinces();
     }
 
+    @GetMapping("province/{id}")
+    public MstProvince province(@PathVariable Integer id) {
+        return service.province(id);
+    }
+
     @GetMapping("district")
     public List<MstDistrict> districts(@RequestParam Integer province) {
         return service.districts(province);
     }
 
+    @GetMapping("district/{id}")
+    public MstDistrict district(@PathVariable Integer id) {
+        return service.district(id);
+    }
+
     @GetMapping("ward")
     public List<MstWard> wards(@RequestParam Integer district) {
         return service.wards(district);
+    }
+
+    @GetMapping("ward/{id}")
+    public MstWard ward(@PathVariable Integer id) {
+        return service.ward(id);
     }
 }
