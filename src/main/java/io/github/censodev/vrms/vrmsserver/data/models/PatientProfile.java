@@ -5,7 +5,7 @@ import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Entity
 @Table(name = "patient_profile")
@@ -21,7 +21,7 @@ public class PatientProfile {
     private Long id;
     private String idCard;
     private String fullName;
-    private LocalDate birthday;
+    private Instant birthday;
 
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;

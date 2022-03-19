@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Getter
@@ -15,7 +16,7 @@ public class PatientProfileRes {
     private Long id;
     private String idCard;
     private String fullName;
-    private LocalDate birthday;
+    private Instant birthday;
     private GenderEnum gender;
     private Integer countryId;
     private Integer nationId;
