@@ -20,6 +20,7 @@ public class VcnPackage {
     private String name;
 
     @Column(name = "`desc`")
+    @Lob
     private String desc;
     private Double price;
 
