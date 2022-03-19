@@ -77,6 +77,7 @@ public class ProfileService {
 
     public void createVcnProfile(VcnProfileCreateReq req) {
         var model = ProfileMapper.map(req);
+        model.setCreatedBy(SessionUtil.getAuth().orElseThrow());
         model = vcnProfileRepository.save(model);
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())
@@ -89,6 +90,12 @@ public class ProfileService {
     public Page<VcnProfileRes> searchVcnProfiles(VcnProfileSearchReq searchReq, PageReq pageReq) {
         return vcnProfileRepository
                 .findByPatientProfileId(searchReq.getPatientProfileId(), pageReq.toPageable())
+                .map(ProfileMapper::map);
+    }
+
+    public Page<VcnProfileRes> getMyVcnProfiles(PageReq pageReq) {
+        return vcnProfileRepository
+                .findByCreatedById(SessionUtil.getAuth().map(Account::getId).orElseThrow(), pageReq.toPageable())
                 .map(ProfileMapper::map);
     }
 }

@@ -13,8 +13,10 @@ import java.time.Instant;
 public class VcnProfileRes {
     private Long id;
     private Instant expectedInjectionTime;
+    private Instant injectionTime;
     private VcnProfileStatusEnum status;
     private Long patientProfileId;
+    private PatientProfileRes patientProfile;
     private Long selectedPackageId;
     private Long selectedSiteId;
 }

@@ -1,5 +1,5 @@
 insert into vrms_db.mst_country (id, code, name)
-values  (100001, 'VN', 'Viet Nam'),
+values  (100001, 'VN', 'Việt Nam'),
         (100002, 'AF', 'Cộng hòa Hồi giáo Ápganixtan'),
         (100003, 'AX', 'Đảo Aland'),
         (100004, 'AL', 'Cộng hòa Anbani'),
