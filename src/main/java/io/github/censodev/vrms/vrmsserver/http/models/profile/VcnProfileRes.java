@@ -1,5 +1,7 @@
 package io.github.censodev.vrms.vrmsserver.http.models.profile;
 
+import io.github.censodev.vrms.vrmsserver.http.models.vcn.resource.pack.VcnPackageRes;
+import io.github.censodev.vrms.vrmsserver.http.models.vcn.resource.site.VcnSiteRes;
 import io.github.censodev.vrms.vrmsserver.utils.enums.VcnProfileStatusEnum;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,5 +20,7 @@ public class VcnProfileRes {
     private Long patientProfileId;
     private PatientProfileRes patientProfile;
     private Long selectedPackageId;
+    private VcnPackageRes selectedPackage;
     private Long selectedSiteId;
+    private VcnSiteRes selectedSite;
 }

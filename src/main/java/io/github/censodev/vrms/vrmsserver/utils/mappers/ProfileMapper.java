@@ -50,8 +50,10 @@ public class ProfileMapper {
                 .patientProfileId(model.getPatientProfile().getId())
                 .patientProfile(map(model.getPatientProfile()))
                 .selectedPackageId(model.getSelectedPackage().getId())
+                .selectedPackage(VcnPackageMapper.map(model.getSelectedPackage()))
                 .status(model.getStatus())
                 .selectedSiteId(model.getSelectedSite().getId())
+                .selectedSite(VcnSiteMapper.map(model.getSelectedSite()))
                 .build();
     }
 
