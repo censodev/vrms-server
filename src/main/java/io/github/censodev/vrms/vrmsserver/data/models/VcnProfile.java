@@ -20,6 +20,7 @@ public class VcnProfile {
     private Long id;
 
     private Instant expectedInjectionTime;
+    private Instant injectionTime;
 
     @Enumerated(EnumType.STRING)
     private VcnProfileStatusEnum status;
@@ -37,4 +38,8 @@ public class VcnProfile {
     private VcnSite selectedSite;
 
     private String symptoms;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private Account createdBy;
 }

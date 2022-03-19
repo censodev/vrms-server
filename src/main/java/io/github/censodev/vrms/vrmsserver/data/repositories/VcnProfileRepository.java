@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VcnProfileRepository extends JpaRepository<VcnProfile, Long> {
     Page<VcnProfile> findByPatientProfileId(Long patientProfileId, Pageable pageable);
+
+    Page<VcnProfile> findByCreatedById(Long createdById, Pageable pageable);
 }
