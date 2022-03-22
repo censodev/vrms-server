@@ -8,6 +8,7 @@ public class AccountMapper {
         return AccountRes.builder()
                 .id(model.getId())
                 .username(model.getUsername())
+                .phone(model.getPhone())
                 .email(model.getEmail())
                 .role(model.getRole())
                 .status(model.getStatus())

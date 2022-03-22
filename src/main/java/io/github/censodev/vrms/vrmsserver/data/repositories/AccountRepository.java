@@ -17,7 +17,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Optional<Account> findByPhoneAndStatus(String phone, StatusEnum status);
 
-    @Query("select a from Account a where a.username like :kw or a.email like :kw")
+    @Query("select a from Account a where a.username like :kw or a.email like :kw or a.phone like :kw")
     Page<Account> search(@Param("kw") String keyword, Pageable pageable);
 
     Optional<Account> findByPhone(String phone);
