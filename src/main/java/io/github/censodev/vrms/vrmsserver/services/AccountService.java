@@ -62,4 +62,10 @@ public class AccountService {
         return accountRepository.search("%" + searchReq.getKeyword() + "%", pageReq.toPageable())
                 .map(AccountMapper::map);
     }
+
+    public AccountRes getOne(Long id) {
+        return accountRepository.findById(id)
+                .map(AccountMapper::map)
+                .orElseThrow();
+    }
 }

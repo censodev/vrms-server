@@ -35,6 +35,11 @@ public class VcnResourceController {
         return new Res<>(vcnResourceService.searchSites(pageReq, searchReq), "");
     }
 
+    @GetMapping("site/{id}")
+    public Res<VcnSiteRes> getOneSite(@PathVariable Long id) {
+        return new Res<>(vcnResourceService.getOneSite(id), "");
+    }
+
     @PostMapping("site")
     @Secured({RoleEnum.Const.ROLE_ADMIN})
     public Res<Void> createSite(@RequestBody VcnSiteCreateReq req) {
@@ -50,9 +55,13 @@ public class VcnResourceController {
     }
 
     @GetMapping("screening-tmpl")
-    @Secured({RoleEnum.Const.ROLE_ADMIN})
     public Res<Page<VcnScreeningTmplRes>> searchScreeningTmpl(VcnScreeningTmplSearchReq searchReq, PageReq pageReq) {
         return new Res<>(vcnResourceService.searchScreeningTmpl(pageReq, searchReq), "");
+    }
+
+    @GetMapping("screening-tmpl/{id}")
+    public Res<VcnScreeningTmplRes> getOneScrTmpl(@PathVariable Long id) {
+        return new Res<>(vcnResourceService.getOneScrTmpl(id), "");
     }
 
     @PostMapping("screening-tmpl")
@@ -72,6 +81,11 @@ public class VcnResourceController {
     @GetMapping("package")
     public Res<Page<VcnPackageRes>> searchPackages(VcnPackageSearchReq searchReq, PageReq pageReq) {
         return new Res<>(vcnResourceService.searchPackages(pageReq, searchReq), "");
+    }
+
+    @GetMapping("package/{id}")
+    public Res<VcnPackageRes> getOnePackage(@PathVariable Long id) {
+        return new Res<>(vcnResourceService.getOnePackage(id), "");
     }
 
     @PostMapping("package")

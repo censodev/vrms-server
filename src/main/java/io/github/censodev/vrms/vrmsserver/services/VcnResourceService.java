@@ -1,9 +1,6 @@
 package io.github.censodev.vrms.vrmsserver.services;
 
-import io.github.censodev.vrms.vrmsserver.data.models.MstDistrict;
-import io.github.censodev.vrms.vrmsserver.data.models.MstProvince;
-import io.github.censodev.vrms.vrmsserver.data.models.MstWard;
-import io.github.censodev.vrms.vrmsserver.data.models.VcnScreeningTmpl;
+import io.github.censodev.vrms.vrmsserver.data.models.*;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnPackageRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnScreeningTmplRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnSiteRepository;
@@ -122,5 +119,23 @@ public class VcnResourceService {
         return vcnScreeningTmplRepository
                 .search("%" + searchReq.getKeyword() + "%", pageReq.toPageable())
                 .map(VcnScreeningTmplMapper::map);
+    }
+
+    public VcnSiteRes getOneSite(Long id) {
+        return vcnSiteRepository.findById(id)
+                .map(VcnSiteMapper::map)
+                .orElseThrow();
+    }
+
+    public VcnPackageRes getOnePackage(Long id) {
+        return vcnPackageRepository.findById(id)
+                .map(VcnPackageMapper::map)
+                .orElseThrow();
+    }
+
+    public VcnScreeningTmplRes getOneScrTmpl(Long id) {
+        return vcnScreeningTmplRepository.findById(id)
+                .map(VcnScreeningTmplMapper::map)
+                .orElseThrow();
     }
 }

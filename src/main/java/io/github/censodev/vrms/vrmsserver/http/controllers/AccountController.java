@@ -29,6 +29,12 @@ public class AccountController {
         return new Res<>(accountService.search(searchReq, pageReq), "");
     }
 
+    @GetMapping("{id}")
+    @Secured({RoleEnum.Const.ROLE_ADMIN})
+    public Res<AccountRes> getOne(@PathVariable Long id) {
+        return new Res<>(accountService.getOne(id), "");
+    }
+
     @PostMapping("")
     @Secured({RoleEnum.Const.ROLE_ADMIN})
     public ResponseEntity<Res<Void>> create(@RequestBody AccountCreateReq req) {
