@@ -45,7 +45,7 @@ public class AccountService {
                 .status(StatusEnum.ACTIVE)
                 .build();
         accountRepository.save(model);
-        aws.sendMail(req.getEmail(), "Thông tin đăng nhập", String.format("Tên đăng nhập: <b>%s</b>%<br/>Mật khẩu: <b>%s</b>", req.getUsername(), pwd));
+        aws.sendMail(req.getEmail(), "Thông tin đăng nhập", String.format("Tên đăng nhập: <b>%s</b><br/>Mật khẩu: <b>%s</b>", req.getUsername(), pwd));
         log.info(String.format("username / password: %s / %s", model.getUsername(), pwd));
     }
 
