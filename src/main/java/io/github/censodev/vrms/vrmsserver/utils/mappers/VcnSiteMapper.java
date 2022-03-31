@@ -16,8 +16,11 @@ public class VcnSiteMapper {
                 .address(model.getAddress())
                 .status(model.getStatus())
                 .provinceId(model.getProvince().getId())
+                .province(model.getProvince())
                 .districtId(model.getDistrict().getId())
+                .district(model.getDistrict())
                 .wardId(model.getWard().getId())
+                .ward(model.getWard())
                 .build();
     }
 
