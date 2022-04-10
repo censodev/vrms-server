@@ -24,6 +24,7 @@ import io.github.censodev.vrms.vrmsserver.utils.mappers.VcnSiteMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -78,6 +79,7 @@ public class VcnResourceService {
         vcnPackageRepository.save(model);
     }
 
+    @Transactional
     public void updatePackage(VcnPackageUpdateReq req) {
         var model = vcnPackageRepository.findById(req.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, I18nUtil.get("vcn.resource.package.not-found")));
@@ -87,11 +89,11 @@ public class VcnResourceService {
         }
 
         model.setName(req.getName());
+        model.setDiseasesCode(req.getDiseasesCode());
         model.setDesc(req.getDesc());
         model.setStatus(req.getStatus());
         model.setPrice(req.getPrice());
         model.setScreeningTemplate(VcnScreeningTmpl.builder().id(req.getScreeningTemplateId()).build());
-        vcnPackageRepository.save(model);
     }
 
     public Page<VcnPackageRes> searchPackages(PageReq pageReq, VcnPackageSearchReq searchReq) {
