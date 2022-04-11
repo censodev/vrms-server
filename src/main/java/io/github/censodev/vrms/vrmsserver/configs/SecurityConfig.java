@@ -3,7 +3,7 @@ package io.github.censodev.vrms.vrmsserver.configs;
 import com.censodev.jauthutils.jwt.JwtAuthenticationFilter;
 import com.censodev.jauthutils.jwt.TokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.censodev.vrms.vrmsserver.data.models.Account;
+import io.github.censodev.vrms.vrmsserver.data.domains.Account;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

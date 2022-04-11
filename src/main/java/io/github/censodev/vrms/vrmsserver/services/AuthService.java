@@ -2,12 +2,12 @@ package io.github.censodev.vrms.vrmsserver.services;
 
 import com.censodev.jauthutils.jwt.TokenProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.github.censodev.vrms.vrmsserver.data.models.Account;
+import io.github.censodev.vrms.vrmsserver.data.domains.Account;
 import io.github.censodev.vrms.vrmsserver.data.repositories.AccountRepository;
-import io.github.censodev.vrms.vrmsserver.http.models.auth.LoginRes;
-import io.github.censodev.vrms.vrmsserver.http.models.auth.LoginUsnPwdReq;
-import io.github.censodev.vrms.vrmsserver.http.models.auth.LoginViaPhoneReq;
-import io.github.censodev.vrms.vrmsserver.http.models.auth.OTPCreateReq;
+import io.github.censodev.vrms.vrmsserver.data.models.auth.LoginRes;
+import io.github.censodev.vrms.vrmsserver.data.models.auth.LoginUsnPwdReq;
+import io.github.censodev.vrms.vrmsserver.data.models.auth.LoginViaPhoneReq;
+import io.github.censodev.vrms.vrmsserver.data.models.auth.OTPCreateReq;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
 import io.github.censodev.vrms.vrmsserver.utils.enums.RoleEnum;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;

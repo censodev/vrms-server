@@ -1,9 +1,9 @@
 package io.github.censodev.vrms.vrmsserver.services;
 
+import io.github.censodev.vrms.vrmsserver.data.models.vcn.process.*;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnPackageRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnScreeningTmplRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnSiteRepository;
-import io.github.censodev.vrms.vrmsserver.http.models.vcn.process.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

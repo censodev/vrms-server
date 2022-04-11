@@ -1,10 +1,10 @@
 package io.github.censodev.vrms.vrmsserver.utils.mappers;
 
-import io.github.censodev.vrms.vrmsserver.data.models.*;
-import io.github.censodev.vrms.vrmsserver.http.models.profile.PatientProfileCreateReq;
-import io.github.censodev.vrms.vrmsserver.http.models.profile.PatientProfileRes;
-import io.github.censodev.vrms.vrmsserver.http.models.profile.VcnProfileCreateReq;
-import io.github.censodev.vrms.vrmsserver.http.models.profile.VcnProfileRes;
+import io.github.censodev.vrms.vrmsserver.data.domains.*;
+import io.github.censodev.vrms.vrmsserver.data.models.profile.PatientProfileCreateReq;
+import io.github.censodev.vrms.vrmsserver.data.models.profile.PatientProfileRes;
+import io.github.censodev.vrms.vrmsserver.data.models.profile.VcnProfileCreateReq;
+import io.github.censodev.vrms.vrmsserver.data.models.profile.VcnProfileRes;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
 import io.github.censodev.vrms.vrmsserver.utils.enums.VcnProfileStatusEnum;
 

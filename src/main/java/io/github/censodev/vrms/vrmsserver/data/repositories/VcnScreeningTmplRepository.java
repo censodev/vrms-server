@@ -1,7 +1,6 @@
 package io.github.censodev.vrms.vrmsserver.data.repositories;
 
-import io.github.censodev.vrms.vrmsserver.data.models.VcnScreeningTmpl;
-import io.github.censodev.vrms.vrmsserver.data.models.VcnSite;
+import io.github.censodev.vrms.vrmsserver.data.domains.VcnScreeningTmpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

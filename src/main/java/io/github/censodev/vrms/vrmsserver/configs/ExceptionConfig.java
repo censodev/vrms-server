@@ -1,6 +1,6 @@
 package io.github.censodev.vrms.vrmsserver.configs;
 
-import io.github.censodev.vrms.vrmsserver.http.models.Res;
+import io.github.censodev.vrms.vrmsserver.data.models.Res;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

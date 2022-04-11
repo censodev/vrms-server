@@ -1,7 +1,7 @@
 package io.github.censodev.vrms.vrmsserver.data.seeders;
 
 import io.github.censodev.vrms.vrmsserver.data.repositories.AccountRepository;
-import io.github.censodev.vrms.vrmsserver.http.models.account.AccountCreateReq;
+import io.github.censodev.vrms.vrmsserver.data.models.account.AccountCreateReq;
 import io.github.censodev.vrms.vrmsserver.services.AccountService;
 import io.github.censodev.vrms.vrmsserver.utils.BeanUtil;
 import io.github.censodev.vrms.vrmsserver.utils.enums.RoleEnum;

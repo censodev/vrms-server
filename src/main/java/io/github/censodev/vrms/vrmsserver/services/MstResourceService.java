@@ -1,6 +1,6 @@
 package io.github.censodev.vrms.vrmsserver.services;
 
-import io.github.censodev.vrms.vrmsserver.data.models.*;
+import io.github.censodev.vrms.vrmsserver.data.domains.*;
 import io.github.censodev.vrms.vrmsserver.data.repositories.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

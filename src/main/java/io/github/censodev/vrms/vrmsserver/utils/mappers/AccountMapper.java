@@ -1,7 +1,7 @@
 package io.github.censodev.vrms.vrmsserver.utils.mappers;
 
-import io.github.censodev.vrms.vrmsserver.data.models.Account;
-import io.github.censodev.vrms.vrmsserver.http.models.account.AccountRes;
+import io.github.censodev.vrms.vrmsserver.data.domains.Account;
+import io.github.censodev.vrms.vrmsserver.data.models.account.AccountRes;
 
 public class AccountMapper {
     public static AccountRes map(Account model) {

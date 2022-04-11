@@ -1,6 +1,6 @@
 package io.github.censodev.vrms.vrmsserver.utils;
 
-import io.github.censodev.vrms.vrmsserver.data.models.Account;
+import io.github.censodev.vrms.vrmsserver.data.domains.Account;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;

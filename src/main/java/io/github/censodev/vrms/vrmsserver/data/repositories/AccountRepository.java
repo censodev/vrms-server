@@ -1,6 +1,6 @@
 package io.github.censodev.vrms.vrmsserver.data.repositories;
 
-import io.github.censodev.vrms.vrmsserver.data.models.Account;
+import io.github.censodev.vrms.vrmsserver.data.domains.Account;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
