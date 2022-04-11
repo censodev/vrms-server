@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -13,5 +14,5 @@ import java.util.Map;
 @AllArgsConstructor
 public class VcnScreeningTmplCreateReq {
     private String title;
-    private Map<Object, Object> data;
+    private List<Object> data;
 }

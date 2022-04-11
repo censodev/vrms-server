@@ -7,7 +7,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
-import java.util.Map;
+import java.util.List;
 
 @Entity
 @Table(name = "vcn_screening_tmpl")
@@ -28,7 +28,7 @@ public class VcnScreeningTmpl {
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    private Map<Object, Object> data;
+    private List<Object> data;
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
