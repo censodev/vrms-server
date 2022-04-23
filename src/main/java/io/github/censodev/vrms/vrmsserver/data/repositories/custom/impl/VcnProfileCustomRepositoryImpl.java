@@ -29,6 +29,10 @@ public class VcnProfileCustomRepositoryImpl implements VcnProfileCustomRepositor
             jpql += "and vp.status = :status\n";
             countJpql += "and vp.status = :status\n";
         }
+        if (req.getKeyword() != null && !req.getKeyword().isBlank()) {
+            jpql += "and (vp.patientProfile.idCard like :kw or vp.patientProfile.fullName like :kw or vp.patientProfile.birthday like :kw)\n";
+            countJpql += "and (vp.patientProfile.idCard like :kw or vp.patientProfile.fullName like :kw or vp.patientProfile.birthday like :kw)\n";
+        }
 
         var query = em.createQuery(jpql, VcnProfile.class)
                 .setMaxResults(pageable.getPageSize())
@@ -42,6 +46,10 @@ public class VcnProfileCustomRepositoryImpl implements VcnProfileCustomRepositor
         if (req.getStatus() != null) {
             query.setParameter("status", req.getStatus());
             countQuery.setParameter("status", req.getStatus());
+        }
+        if (req.getKeyword() != null && !req.getKeyword().isBlank()) {
+            query.setParameter("kw", "%" + req.getKeyword() + "%");
+            countQuery.setParameter("kw", "%" + req.getKeyword() + "%");
         }
 
         long total = (long) countQuery.getSingleResult();
