@@ -1,10 +1,14 @@
 package io.github.censodev.vrms.vrmsserver.data.domains;
 
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import io.github.censodev.vrms.vrmsserver.utils.enums.VcnProfileStatusEnum;
 import lombok.*;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "vcn_profile")
@@ -13,6 +17,7 @@ import java.time.Instant;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@TypeDef(name = "json", typeClass = JsonType.class)
 public class VcnProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +43,10 @@ public class VcnProfile {
     private VcnSite selectedSite;
 
     private String symptoms;
+
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private List<Object> screeningTestResult;
 
     @ManyToOne
     @JoinColumn(name = "created_by")

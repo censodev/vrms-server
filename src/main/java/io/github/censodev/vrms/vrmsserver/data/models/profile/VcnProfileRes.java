@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,4 +24,6 @@ public class VcnProfileRes {
     private VcnPackageRes selectedPackage;
     private Long selectedSiteId;
     private VcnSiteRes selectedSite;
+    private String symptoms;
+    private List<Object> screeningTestResult;
 }

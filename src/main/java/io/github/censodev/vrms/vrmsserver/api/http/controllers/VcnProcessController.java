@@ -20,15 +20,15 @@ public class VcnProcessController {
         this.vcnProcessService = vcnProcessService;
     }
 
-    @PostMapping("checkin")
-    @Secured({RoleEnum.Const.ROLE_ADMIN})
+    @PostMapping("check-in")
+    @Secured({RoleEnum.Const.ROLE_AGENT})
     public Res<Void> processCheckIn(@RequestBody VcnProcessCheckInReq req) {
         vcnProcessService.processCheckIn(req);
         return new Res<>(null, I18nUtil.get("vcn.process.checkin-success"));
     }
 
     @PostMapping("test")
-    @Secured({RoleEnum.Const.ROLE_ADMIN})
+    @Secured({RoleEnum.Const.ROLE_AGENT})
     public Res<Void> processScreeningTest(@RequestBody VcnProcessTestReq req) {
         vcnProcessService.processTest(req);
         return new Res<>(null, I18nUtil.get("vcn.process.test-success"));
@@ -41,14 +41,14 @@ public class VcnProcessController {
     }
 
     @PostMapping("complete")
-    @Secured({RoleEnum.Const.ROLE_ADMIN})
+    @Secured({RoleEnum.Const.ROLE_AGENT})
     public Res<Void> processComplete(@RequestBody VcnProcessCompleteReq req) {
         vcnProcessService.processComplete(req);
         return new Res<>(null, I18nUtil.get("vcn.process.complete"));
     }
 
     @PostMapping("fail")
-    @Secured({RoleEnum.Const.ROLE_ADMIN})
+    @Secured({RoleEnum.Const.ROLE_AGENT})
     public Res<Void> processFail(@RequestBody VcnProcessFailReq req) {
         vcnProcessService.processFail(req);
         return new Res<>(null, I18nUtil.get("vcn.process.fail"));
