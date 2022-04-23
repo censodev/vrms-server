@@ -89,7 +89,7 @@ public class ProfileService {
 
     public Page<VcnProfileRes> searchVcnProfiles(VcnProfileSearchReq searchReq, PageReq pageReq) {
         return vcnProfileRepository
-                .findByPatientProfileId(searchReq.getPatientProfileId(), pageReq.toPageable())
+                .search(searchReq, pageReq.toPageable())
                 .map(ProfileMapper::map);
     }
 
