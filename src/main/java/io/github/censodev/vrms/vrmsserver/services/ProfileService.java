@@ -1,11 +1,11 @@
 package io.github.censodev.vrms.vrmsserver.services;
 
 import io.github.censodev.vrms.vrmsserver.data.domains.*;
+import io.github.censodev.vrms.vrmsserver.data.models.PageReq;
 import io.github.censodev.vrms.vrmsserver.data.models.profile.*;
 import io.github.censodev.vrms.vrmsserver.data.repositories.PatientProfileRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileHistoryRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileRepository;
-import io.github.censodev.vrms.vrmsserver.data.models.PageReq;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
 import io.github.censodev.vrms.vrmsserver.utils.SessionUtil;
 import io.github.censodev.vrms.vrmsserver.utils.enums.VcnProfileStatusEnum;
@@ -97,5 +97,12 @@ public class ProfileService {
         return vcnProfileRepository
                 .findByCreatedById(SessionUtil.getAuth().map(Account::getId).orElseThrow(), pageReq.toPageable())
                 .map(ProfileMapper::map);
+    }
+
+    public VcnProfileRes getVcnProfile(Long id) {
+        return vcnProfileRepository
+                .findById(id)
+                .map(ProfileMapper::map)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
     }
 }

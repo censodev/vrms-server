@@ -1,7 +1,9 @@
 package io.github.censodev.vrms.vrmsserver.services;
 
+import io.github.censodev.vrms.vrmsserver.data.domains.Payment;
 import io.github.censodev.vrms.vrmsserver.data.domains.VcnProfileHistory;
 import io.github.censodev.vrms.vrmsserver.data.models.vcn.process.*;
+import io.github.censodev.vrms.vrmsserver.data.repositories.PaymentRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileHistoryRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileRepository;
 import io.github.censodev.vrms.vrmsserver.utils.SessionUtil;
@@ -17,11 +19,14 @@ import java.time.Instant;
 public class VcnProcessService {
     private final VcnProfileRepository vcnProfileRepository;
     private final VcnProfileHistoryRepository vcnProfileHistoryRepository;
+    private final PaymentRepository paymentRepository;
 
     public VcnProcessService(VcnProfileRepository vcnProfileRepository,
-                             VcnProfileHistoryRepository vcnProfileHistoryRepository) {
+                             VcnProfileHistoryRepository vcnProfileHistoryRepository,
+                             PaymentRepository paymentRepository) {
         this.vcnProfileRepository = vcnProfileRepository;
         this.vcnProfileHistoryRepository = vcnProfileHistoryRepository;
+        this.paymentRepository = paymentRepository;
     }
 
     @Transactional
@@ -64,6 +69,28 @@ public class VcnProcessService {
 
     @Transactional
     public void processPayment(VcnProcessPaymentReq req) {
+        var profile = vcnProfileRepository
+                .findById(req.getVcnProfileId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY));
+
+        if (profile.getStatus() != VcnProfileStatusEnum.TESTED_PASSED) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        profile.setStatus(VcnProfileStatusEnum.PAID);
+
+        paymentRepository.save(Payment.builder()
+                .vcnProfile(profile)
+                .amount(req.getAmount())
+                .createdAt(Instant.now())
+                .build());
+
+        vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
+                .createdBy(SessionUtil.getAuth().orElseThrow())
+                .vcnProfile(profile)
+                .time(Instant.now())
+                .status(VcnProfileStatusEnum.PAID)
+                .build());
     }
 
     @Transactional

@@ -49,6 +49,11 @@ public class ProfileController {
         return new Res<>(profileService.getMyVcnProfiles(pageReq), "");
     }
 
+    @GetMapping("vcn/{id}")
+    public Res<VcnProfileRes> getVcnProfile(@PathVariable Long id) {
+        return new Res<>(profileService.getVcnProfile(id), "");
+    }
+
     @PostMapping("vcn")
     public Res<Void> createVcnProfile(@RequestBody VcnProfileCreateReq req) {
         profileService.createVcnProfile(req);
