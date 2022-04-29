@@ -51,4 +51,7 @@ public class VcnProfile {
     @ManyToOne
     @JoinColumn(name = "created_by")
     private Account createdBy;
+
+    private Instant createdAt;
+    private Instant updatedAt;
 }

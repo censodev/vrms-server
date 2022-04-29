@@ -37,10 +37,12 @@ public class VcnProcessService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         profile.setStatus(VcnProfileStatusEnum.CHECKED_IN);
+        var now = Instant.now();
+        profile.setUpdatedAt(now);
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())
                 .vcnProfile(profile)
-                .time(Instant.now())
+                .time(now)
                 .status(VcnProfileStatusEnum.CHECKED_IN)
                 .build());
     }
@@ -55,14 +57,16 @@ public class VcnProcessService {
         }
 
         profile.setScreeningTestResult(req.getData());
-        var newStatus = req.getOk()
+        var newStatus = Boolean.TRUE.equals(req.getOk())
                 ? VcnProfileStatusEnum.TESTED_PASSED
                 : VcnProfileStatusEnum.TESTED_FAILED;
         profile.setStatus(newStatus);
+        var now = Instant.now();
+        profile.setUpdatedAt(now);
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())
                 .vcnProfile(profile)
-                .time(Instant.now())
+                .time(now)
                 .status(newStatus)
                 .build());
     }
@@ -78,17 +82,19 @@ public class VcnProcessService {
         }
 
         profile.setStatus(VcnProfileStatusEnum.PAID);
+        var now = Instant.now();
+        profile.setUpdatedAt(now);
 
         paymentRepository.save(Payment.builder()
                 .vcnProfile(profile)
                 .amount(req.getAmount())
-                .createdAt(Instant.now())
+                .createdAt(now)
                 .build());
 
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())
                 .vcnProfile(profile)
-                .time(Instant.now())
+                .time(now)
                 .status(VcnProfileStatusEnum.PAID)
                 .build());
     }
@@ -104,11 +110,13 @@ public class VcnProcessService {
 
         profile.setStatus(VcnProfileStatusEnum.INJECTED);
         profile.setInjectionTime(Instant.now());
+        var now = Instant.now();
+        profile.setUpdatedAt(now);
 
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())
                 .vcnProfile(profile)
-                .time(Instant.now())
+                .time(now)
                 .status(VcnProfileStatusEnum.INJECTED)
                 .build());
     }
@@ -121,10 +129,12 @@ public class VcnProcessService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         profile.setStatus(VcnProfileStatusEnum.COMPLETED);
+        var now = Instant.now();
+        profile.setUpdatedAt(now);
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())
                 .vcnProfile(profile)
-                .time(Instant.now())
+                .time(now)
                 .status(VcnProfileStatusEnum.COMPLETED)
                 .build());
     }
@@ -138,10 +148,12 @@ public class VcnProcessService {
         }
         profile.setStatus(VcnProfileStatusEnum.FAILED);
         profile.setSymptoms(req.getSymptoms());
+        var now = Instant.now();
+        profile.setUpdatedAt(now);
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())
                 .vcnProfile(profile)
-                .time(Instant.now())
+                .time(now)
                 .status(VcnProfileStatusEnum.FAILED)
                 .build());
     }
@@ -157,10 +169,12 @@ public class VcnProcessService {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         profile.setStatus(VcnProfileStatusEnum.CANCELED);
+        var now = Instant.now();
+        profile.setUpdatedAt(now);
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())
                 .vcnProfile(profile)
-                .time(Instant.now())
+                .time(now)
                 .status(VcnProfileStatusEnum.CANCELED)
                 .build());
     }
