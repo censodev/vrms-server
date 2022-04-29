@@ -56,6 +56,8 @@ public class ProfileMapper {
                 .selectedSite(VcnSiteMapper.map(model.getSelectedSite()))
                 .symptoms(model.getSymptoms())
                 .screeningTestResult(model.getScreeningTestResult())
+                .createdAt(model.getCreatedAt())
+                .updatedAt(model.getUpdatedAt())
                 .build();
     }
 

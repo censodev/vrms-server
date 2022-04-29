@@ -78,6 +78,7 @@ public class ProfileService {
     public void createVcnProfile(VcnProfileCreateReq req) {
         var model = ProfileMapper.map(req);
         model.setCreatedBy(SessionUtil.getAuth().orElseThrow());
+        model.setCreatedAt(Instant.now());
         model = vcnProfileRepository.save(model);
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())

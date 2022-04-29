@@ -26,4 +26,6 @@ public class VcnProfileRes {
     private VcnSiteRes selectedSite;
     private String symptoms;
     private List<Object> screeningTestResult;
+    private Instant createdAt;
+    private Instant updatedAt;
 }
