@@ -94,10 +94,30 @@ public class VcnProcessService {
     }
 
     @Transactional
+    public void processInjection(VcnProcessInjectionReq req) {
+        var profile = vcnProfileRepository.findById(req.getVcnProfileId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY));
+
+        if (profile.getStatus() != VcnProfileStatusEnum.PAID) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        profile.setStatus(VcnProfileStatusEnum.INJECTED);
+        profile.setInjectionTime(Instant.now());
+
+        vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
+                .createdBy(SessionUtil.getAuth().orElseThrow())
+                .vcnProfile(profile)
+                .time(Instant.now())
+                .status(VcnProfileStatusEnum.INJECTED)
+                .build());
+    }
+
+    @Transactional
     public void processComplete(VcnProcessCompleteReq req) {
         var profile = vcnProfileRepository.findById(req.getVcnProfileId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY));
-        if (profile.getStatus() != VcnProfileStatusEnum.PAID) {
+        if (profile.getStatus() != VcnProfileStatusEnum.INJECTED) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         profile.setStatus(VcnProfileStatusEnum.COMPLETED);
@@ -113,8 +133,7 @@ public class VcnProcessService {
     public void processFail(VcnProcessFailReq req) {
         var profile = vcnProfileRepository.findById(req.getVcnProfileId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY));
-        if (profile.getStatus() == VcnProfileStatusEnum.FAILED
-                || profile.getStatus() == VcnProfileStatusEnum.TESTED_FAILED) {
+        if (profile.getStatus() != VcnProfileStatusEnum.INJECTED) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         profile.setStatus(VcnProfileStatusEnum.FAILED);

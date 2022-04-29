@@ -40,6 +40,12 @@ public class VcnProcessController {
         return new Res<>(null, I18nUtil.get("vcn.process.pay-success"));
     }
 
+    @PostMapping("inject")
+    public Res<Void> processInjection(@RequestBody VcnProcessInjectionReq req) {
+        vcnProcessService.processInjection(req);
+        return new Res<>(null, I18nUtil.get("vcn.process.injection-success"));
+    }
+
     @PostMapping("complete")
     @Secured({RoleEnum.Const.ROLE_AGENT})
     public Res<Void> processComplete(@RequestBody VcnProcessCompleteReq req) {

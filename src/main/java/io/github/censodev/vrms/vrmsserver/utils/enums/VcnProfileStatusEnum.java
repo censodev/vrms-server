@@ -6,6 +6,7 @@ public enum VcnProfileStatusEnum {
     TESTED_PASSED,
     TESTED_FAILED,
     PAID,
+    INJECTED,
     COMPLETED,
     FAILED,
     CANCELED,
