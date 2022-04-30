@@ -78,12 +78,14 @@ public class ProfileService {
     public void createVcnProfile(VcnProfileCreateReq req) {
         var model = ProfileMapper.map(req);
         model.setCreatedBy(SessionUtil.getAuth().orElseThrow());
-        model.setCreatedAt(Instant.now());
+        var now = Instant.now();
+        model.setCreatedAt(now);
+        model.setUpdatedAt(now);
         model = vcnProfileRepository.save(model);
         vcnProfileHistoryRepository.save(VcnProfileHistory.builder()
                 .createdBy(SessionUtil.getAuth().orElseThrow())
                 .vcnProfile(model)
-                .time(Instant.now())
+                .time(now)
                 .status(VcnProfileStatusEnum.CREATED)
                 .build());
     }
