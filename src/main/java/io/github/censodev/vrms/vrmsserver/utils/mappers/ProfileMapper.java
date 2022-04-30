@@ -34,10 +34,15 @@ public class ProfileMapper {
                 .gender(model.getGender())
                 .status(model.getStatus())
                 .countryId(model.getCountry().getId())
+                .country(model.getCountry())
                 .nationId(model.getNation().getId())
+                .nation(model.getNation())
                 .provinceId(model.getProvince().getId())
+                .province(model.getProvince())
                 .districtId(model.getDistrict().getId())
+                .district(model.getDistrict())
                 .wardId(model.getWard().getId())
+                .ward(model.getWard())
                 .address(model.getAddress())
                 .build();
     }

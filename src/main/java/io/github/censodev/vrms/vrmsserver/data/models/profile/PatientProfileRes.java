@@ -1,5 +1,6 @@
 package io.github.censodev.vrms.vrmsserver.data.models.profile;
 
+import io.github.censodev.vrms.vrmsserver.data.domains.*;
 import io.github.censodev.vrms.vrmsserver.utils.enums.GenderEnum;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
 import lombok.Builder;
@@ -19,10 +20,15 @@ public class PatientProfileRes {
     private Instant birthday;
     private GenderEnum gender;
     private Integer countryId;
+    private MstCountry country;
     private Integer nationId;
+    private MstNation nation;
     private Integer provinceId;
+    private MstProvince province;
     private Integer districtId;
+    private MstDistrict district;
     private Integer wardId;
+    private MstWard ward;
     private String address;
     private StatusEnum status;
 }
