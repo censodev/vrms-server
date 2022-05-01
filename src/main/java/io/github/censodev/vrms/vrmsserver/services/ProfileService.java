@@ -4,6 +4,7 @@ import io.github.censodev.vrms.vrmsserver.data.domains.*;
 import io.github.censodev.vrms.vrmsserver.data.models.PageReq;
 import io.github.censodev.vrms.vrmsserver.data.models.profile.*;
 import io.github.censodev.vrms.vrmsserver.data.repositories.PatientProfileRepository;
+import io.github.censodev.vrms.vrmsserver.data.repositories.PaymentRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileHistoryRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileRepository;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
@@ -16,19 +17,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfileService {
     private final PatientProfileRepository patientProfileRepository;
     private final VcnProfileRepository vcnProfileRepository;
     private final VcnProfileHistoryRepository vcnProfileHistoryRepository;
+    private final PaymentRepository paymentRepository;
 
     public ProfileService(PatientProfileRepository patientProfileRepository,
                           VcnProfileRepository vcnProfileRepository,
-                          VcnProfileHistoryRepository vcnProfileHistoryRepository) {
+                          VcnProfileHistoryRepository vcnProfileHistoryRepository,
+                          PaymentRepository paymentRepository) {
         this.patientProfileRepository = patientProfileRepository;
         this.vcnProfileRepository = vcnProfileRepository;
         this.vcnProfileHistoryRepository = vcnProfileHistoryRepository;
+        this.paymentRepository = paymentRepository;
     }
 
     public void createPatientProfile(PatientProfileCreateReq req) {
@@ -107,5 +113,21 @@ public class ProfileService {
                 .findById(id)
                 .map(ProfileMapper::map)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT));
+    }
+
+    public List<VcnProfileHistoryRes> getVcnProfileHistories(Long profileId) {
+        return vcnProfileHistoryRepository
+                .findByVcnProfileId(profileId)
+                .stream()
+                .map(ProfileMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    public List<VcnProfilePaymentRes> getVcnProfilePayments(Long profileId) {
+        return paymentRepository
+                .findByVcnProfileId(profileId)
+                .stream()
+                .map(ProfileMapper::map)
+                .collect(Collectors.toList());
     }
 }

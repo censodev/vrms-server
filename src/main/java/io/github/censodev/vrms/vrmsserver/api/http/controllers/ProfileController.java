@@ -8,6 +8,8 @@ import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/profile")
 public class ProfileController {
@@ -52,6 +54,16 @@ public class ProfileController {
     @GetMapping("vcn/{id}")
     public Res<VcnProfileRes> getVcnProfile(@PathVariable Long id) {
         return new Res<>(profileService.getVcnProfile(id), "");
+    }
+
+    @GetMapping("vcn/{id}/history")
+    public Res<List<VcnProfileHistoryRes>> getVcnProfileHistories(@PathVariable Long id) {
+        return new Res<>(profileService.getVcnProfileHistories(id), "");
+    }
+
+    @GetMapping("vcn/{id}/payment")
+    public Res<List<VcnProfilePaymentRes>> getVcnProfilePayments(@PathVariable Long id) {
+        return new Res<>(profileService.getVcnProfilePayments(id), "");
     }
 
     @PostMapping("vcn")

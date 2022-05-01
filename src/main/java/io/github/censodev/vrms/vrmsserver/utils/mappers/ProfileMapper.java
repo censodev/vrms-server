@@ -1,10 +1,7 @@
 package io.github.censodev.vrms.vrmsserver.utils.mappers;
 
 import io.github.censodev.vrms.vrmsserver.data.domains.*;
-import io.github.censodev.vrms.vrmsserver.data.models.profile.PatientProfileCreateReq;
-import io.github.censodev.vrms.vrmsserver.data.models.profile.PatientProfileRes;
-import io.github.censodev.vrms.vrmsserver.data.models.profile.VcnProfileCreateReq;
-import io.github.censodev.vrms.vrmsserver.data.models.profile.VcnProfileRes;
+import io.github.censodev.vrms.vrmsserver.data.models.profile.*;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
 import io.github.censodev.vrms.vrmsserver.utils.enums.VcnProfileStatusEnum;
 
@@ -73,6 +70,23 @@ public class ProfileMapper {
                 .selectedPackage(VcnPackage.builder().id(req.getSelectedPackageId()).build())
                 .selectedSite(VcnSite.builder().id(req.getSelectedSiteId()).build())
                 .status(VcnProfileStatusEnum.CREATED)
+                .build();
+    }
+
+    public static VcnProfileHistoryRes map(VcnProfileHistory model) {
+        return VcnProfileHistoryRes.builder()
+                .id(model.getId())
+                .time(model.getTime())
+                .status(model.getStatus())
+                .createdBy(AccountMapper.map(model.getCreatedBy()))
+                .build();
+    }
+
+    public static VcnProfilePaymentRes map(Payment model) {
+        return VcnProfilePaymentRes.builder()
+                .id(model.getId())
+                .amount(model.getAmount())
+                .createdAt(model.getCreatedAt())
                 .build();
     }
 }
