@@ -31,6 +31,8 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
     implementation 'software.amazon.awssdk:sns:2.17.143'
     implementation 'software.amazon.awssdk:ses:2.17.143'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus:1.8.2'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
