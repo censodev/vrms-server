@@ -1,7 +1,7 @@
 package io.github.censodev.vrms.vrmsserver.data.repositories.custom.impl;
 
 import io.github.censodev.vrms.vrmsserver.data.domains.VcnProfile;
-import io.github.censodev.vrms.vrmsserver.data.models.profile.VcnProfileSearchReq;
+import io.github.censodev.vrms.vrmsserver.data.dto.profile.VcnProfileSearchReq;
 import io.github.censodev.vrms.vrmsserver.data.repositories.custom.VcnProfileCustomRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

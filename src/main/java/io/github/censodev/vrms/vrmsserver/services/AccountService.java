@@ -2,11 +2,11 @@ package io.github.censodev.vrms.vrmsserver.services;
 
 import io.github.censodev.vrms.vrmsserver.data.domains.Account;
 import io.github.censodev.vrms.vrmsserver.data.repositories.AccountRepository;
-import io.github.censodev.vrms.vrmsserver.data.models.PageReq;
-import io.github.censodev.vrms.vrmsserver.data.models.account.AccountCreateReq;
-import io.github.censodev.vrms.vrmsserver.data.models.account.AccountRes;
-import io.github.censodev.vrms.vrmsserver.data.models.account.AccountSearchReq;
-import io.github.censodev.vrms.vrmsserver.data.models.account.AccountUpdateReq;
+import io.github.censodev.vrms.vrmsserver.data.dto.PageReq;
+import io.github.censodev.vrms.vrmsserver.data.dto.account.AccountCreateReq;
+import io.github.censodev.vrms.vrmsserver.data.dto.account.AccountRes;
+import io.github.censodev.vrms.vrmsserver.data.dto.account.AccountSearchReq;
+import io.github.censodev.vrms.vrmsserver.data.dto.account.AccountUpdateReq;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
 import io.github.censodev.vrms.vrmsserver.utils.RandomUtil;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;

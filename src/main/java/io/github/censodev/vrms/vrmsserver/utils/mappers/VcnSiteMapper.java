@@ -4,11 +4,14 @@ import io.github.censodev.vrms.vrmsserver.data.domains.MstDistrict;
 import io.github.censodev.vrms.vrmsserver.data.domains.MstProvince;
 import io.github.censodev.vrms.vrmsserver.data.domains.MstWard;
 import io.github.censodev.vrms.vrmsserver.data.domains.VcnSite;
-import io.github.censodev.vrms.vrmsserver.data.models.vcn.resource.site.VcnSiteCreateReq;
-import io.github.censodev.vrms.vrmsserver.data.models.vcn.resource.site.VcnSiteRes;
+import io.github.censodev.vrms.vrmsserver.data.dto.vcn.resource.site.VcnSiteCreateReq;
+import io.github.censodev.vrms.vrmsserver.data.dto.vcn.resource.site.VcnSiteRes;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
 
 public class VcnSiteMapper {
+    private VcnSiteMapper() {
+    }
+
     public static VcnSiteRes map(VcnSite model) {
         return VcnSiteRes.builder()
                 .id(model.getId())

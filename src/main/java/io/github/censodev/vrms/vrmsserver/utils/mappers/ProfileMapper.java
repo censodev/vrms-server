@@ -1,11 +1,14 @@
 package io.github.censodev.vrms.vrmsserver.utils.mappers;
 
 import io.github.censodev.vrms.vrmsserver.data.domains.*;
-import io.github.censodev.vrms.vrmsserver.data.models.profile.*;
+import io.github.censodev.vrms.vrmsserver.data.dto.profile.*;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
 import io.github.censodev.vrms.vrmsserver.utils.enums.VcnProfileStatusEnum;
 
 public class ProfileMapper {
+    private ProfileMapper() {
+    }
+
     public static PatientProfile map(PatientProfileCreateReq model) {
         return PatientProfile.builder()
                 .idCard(model.getIdCard())

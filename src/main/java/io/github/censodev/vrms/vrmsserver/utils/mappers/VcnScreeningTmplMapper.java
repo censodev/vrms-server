@@ -1,11 +1,14 @@
 package io.github.censodev.vrms.vrmsserver.utils.mappers;
 
 import io.github.censodev.vrms.vrmsserver.data.domains.VcnScreeningTmpl;
-import io.github.censodev.vrms.vrmsserver.data.models.vcn.resource.screening.VcnScreeningTmplCreateReq;
-import io.github.censodev.vrms.vrmsserver.data.models.vcn.resource.screening.VcnScreeningTmplRes;
+import io.github.censodev.vrms.vrmsserver.data.dto.vcn.resource.screening.VcnScreeningTmplCreateReq;
+import io.github.censodev.vrms.vrmsserver.data.dto.vcn.resource.screening.VcnScreeningTmplRes;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
 
 public class VcnScreeningTmplMapper {
+    private VcnScreeningTmplMapper() {
+    }
+
     public static VcnScreeningTmpl map(VcnScreeningTmplCreateReq req) {
         return VcnScreeningTmpl.builder()
                 .title(req.getTitle())
