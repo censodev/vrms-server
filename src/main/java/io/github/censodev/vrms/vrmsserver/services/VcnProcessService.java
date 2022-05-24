@@ -2,7 +2,7 @@ package io.github.censodev.vrms.vrmsserver.services;
 
 import io.github.censodev.vrms.vrmsserver.data.domains.Payment;
 import io.github.censodev.vrms.vrmsserver.data.domains.VcnProfileHistory;
-import io.github.censodev.vrms.vrmsserver.data.models.vcn.process.*;
+import io.github.censodev.vrms.vrmsserver.data.dto.vcn.process.*;
 import io.github.censodev.vrms.vrmsserver.data.repositories.PaymentRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileHistoryRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileRepository;

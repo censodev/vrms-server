@@ -1,8 +1,8 @@
 package io.github.censodev.vrms.vrmsserver.services;
 
 import io.github.censodev.vrms.vrmsserver.data.domains.*;
-import io.github.censodev.vrms.vrmsserver.data.models.PageReq;
-import io.github.censodev.vrms.vrmsserver.data.models.profile.*;
+import io.github.censodev.vrms.vrmsserver.data.dto.PageReq;
+import io.github.censodev.vrms.vrmsserver.data.dto.profile.*;
 import io.github.censodev.vrms.vrmsserver.data.repositories.PatientProfileRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.PaymentRepository;
 import io.github.censodev.vrms.vrmsserver.data.repositories.VcnProfileHistoryRepository;
