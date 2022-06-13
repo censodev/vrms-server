@@ -1,22 +1,26 @@
 package io.github.censodev.vrms.vrmsserver.services;
 
 import io.github.censodev.vrms.vrmsserver.data.domains.Account;
-import io.github.censodev.vrms.vrmsserver.data.repositories.AccountRepository;
 import io.github.censodev.vrms.vrmsserver.data.dto.PageReq;
 import io.github.censodev.vrms.vrmsserver.data.dto.account.AccountCreateReq;
 import io.github.censodev.vrms.vrmsserver.data.dto.account.AccountRes;
 import io.github.censodev.vrms.vrmsserver.data.dto.account.AccountSearchReq;
 import io.github.censodev.vrms.vrmsserver.data.dto.account.AccountUpdateReq;
+import io.github.censodev.vrms.vrmsserver.data.repositories.AccountRepository;
 import io.github.censodev.vrms.vrmsserver.utils.I18nUtil;
 import io.github.censodev.vrms.vrmsserver.utils.RandomUtil;
 import io.github.censodev.vrms.vrmsserver.utils.enums.StatusEnum;
 import io.github.censodev.vrms.vrmsserver.utils.mappers.AccountMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 
 @Service
 @Slf4j
@@ -59,7 +63,16 @@ public class AccountService {
     }
 
     public Page<AccountRes> search(AccountSearchReq searchReq, PageReq pageReq) {
-        return accountRepository.search("%" + searchReq.getKeyword() + "%", pageReq.toPageable())
+        var matcher = ExampleMatcher.matchingAny()
+                .withMatcher("email", contains())
+                .withMatcher("username", contains())
+                .withMatcher("phone", contains());
+        var probe = Account.builder()
+                .email(searchReq.getKeyword())
+                .username(searchReq.getKeyword())
+                .phone(searchReq.getKeyword())
+                .build();
+        return accountRepository.findAll(Example.of(probe, matcher), pageReq.toPageable())
                 .map(AccountMapper::map);
     }
 
