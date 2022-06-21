@@ -21,40 +21,41 @@ public class VcnProcessController {
     }
 
     @PostMapping("check-in")
-    @Secured({RoleEnum.Const.ROLE_AGENT})
+    @Secured({RoleEnum.Const.ROLE_AGENT, RoleEnum.Const.ROLE_AGENT_CHECKIN})
     public Res<Void> processCheckIn(@RequestBody VcnProcessCheckInReq req) {
         vcnProcessService.processCheckIn(req);
         return new Res<>(null, I18nUtil.get("vcn.process.checkin-success"));
     }
 
     @PostMapping("test")
-    @Secured({RoleEnum.Const.ROLE_AGENT})
+    @Secured({RoleEnum.Const.ROLE_AGENT, RoleEnum.Const.ROLE_AGENT_TEST})
     public Res<Void> processScreeningTest(@RequestBody VcnProcessTestReq req) {
         vcnProcessService.processTest(req);
         return new Res<>(null, I18nUtil.get("vcn.process.test-success"));
     }
 
     @PostMapping("pay")
+    @Secured({RoleEnum.Const.ROLE_AGENT, RoleEnum.Const.ROLE_AGENT_PAY})
     public Res<Void> processScreeningTest(@RequestBody VcnProcessPaymentReq req) {
         vcnProcessService.processPayment(req);
         return new Res<>(null, I18nUtil.get("vcn.process.pay-success"));
     }
 
     @PostMapping("inject")
+    @Secured({RoleEnum.Const.ROLE_AGENT, RoleEnum.Const.ROLE_AGENT_INJECT})
     public Res<Void> processInjection(@RequestBody VcnProcessInjectionReq req) {
         vcnProcessService.processInjection(req);
         return new Res<>(null, I18nUtil.get("vcn.process.injection-success"));
     }
 
     @PostMapping("complete")
-    @Secured({RoleEnum.Const.ROLE_AGENT})
+    @Secured({RoleEnum.Const.ROLE_AGENT, RoleEnum.Const.ROLE_AGENT_MONITOR})
     public Res<Void> processComplete(@RequestBody VcnProcessCompleteReq req) {
         vcnProcessService.processComplete(req);
         return new Res<>(null, I18nUtil.get("vcn.process.complete"));
     }
 
     @PostMapping("fail")
-    @Secured({RoleEnum.Const.ROLE_AGENT})
     public Res<Void> processFail(@RequestBody VcnProcessFailReq req) {
         vcnProcessService.processFail(req);
         return new Res<>(null, I18nUtil.get("vcn.process.fail"));
