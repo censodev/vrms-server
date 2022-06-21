@@ -43,6 +43,7 @@ public class ProfileService {
         }
         var model = ProfileMapper.map(req);
         model.setCreatedBy(SessionUtil.getAuth().orElseThrow());
+        model.setPrimary(!patientProfileRepository.existsByCreatedBy(model.getCreatedBy()));
         patientProfileRepository.save(model);
     }
 

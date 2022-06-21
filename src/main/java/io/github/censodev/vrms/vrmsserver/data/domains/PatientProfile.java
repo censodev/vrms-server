@@ -54,4 +54,6 @@ public class PatientProfile {
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
+    private boolean primary;
 }
