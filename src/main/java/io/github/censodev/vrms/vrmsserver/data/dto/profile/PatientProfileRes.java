@@ -30,4 +30,5 @@ public class PatientProfileRes {
     private MstWard ward;
     private String address;
     private StatusEnum status;
+    private boolean primary;
 }

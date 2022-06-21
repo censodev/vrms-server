@@ -44,6 +44,7 @@ public class ProfileMapper {
                 .wardId(model.getWard().getId())
                 .ward(model.getWard())
                 .address(model.getAddress())
+                .primary(model.isPrimary())
                 .build();
     }
 

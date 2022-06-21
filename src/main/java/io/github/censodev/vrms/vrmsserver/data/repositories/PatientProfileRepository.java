@@ -1,5 +1,6 @@
 package io.github.censodev.vrms.vrmsserver.data.repositories;
 
+import io.github.censodev.vrms.vrmsserver.data.domains.Account;
 import io.github.censodev.vrms.vrmsserver.data.domains.PatientProfile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +17,6 @@ public interface PatientProfileRepository extends JpaRepository<PatientProfile, 
     Optional<PatientProfile> findByIdCard(String idCard);
 
     Page<PatientProfile> findByCreatedById(Long createdById, Pageable pageable);
+
+    boolean existsByCreatedBy(Account createdBy);
 }
