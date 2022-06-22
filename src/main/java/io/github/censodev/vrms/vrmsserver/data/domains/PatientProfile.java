@@ -55,5 +55,6 @@ public class PatientProfile {
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
+    @Column(name = "`primary`")
     private boolean primary;
 }
